@@ -1,0 +1,6 @@
+# Ignore build folder
+build
+
+# Ignore config stuff
+*config.js
+server.js
