@@ -1,7 +1,7 @@
 {
-  "name": "webpack-boilerplate",
+  "name": "reactjs-boilerplate",
   "version": "0.0.1",
-  "description": "Quick start for new web application using webpack",
+  "description": "Quick setup for a new React.js application",
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
@@ -11,9 +11,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/styryshkin/webpack-boilerplate.git"
+    "url": "git+https://github.com/styryshkin/reactjs-boilerplate.git"
   },
-  "homepage": "https://github.com/styryshkin/webpack-boilerplate#readme",
+  "homepage": "https://github.com/styryshkin/reactjs-boilerplate#readme",
   "devDependencies": {
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.2",
