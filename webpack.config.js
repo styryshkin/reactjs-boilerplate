@@ -3,32 +3,25 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const development = process.env.NODE_ENV !== 'production';
 
-let entry = [];
+const development = process.env.NODE_ENV !== 'production';
+const dir_js = path.resolve(__dirname, 'src/js');
+const dir_build = path.resolve(__dirname, 'build');
+const dir_node_modules = path.join(__dirname, '/node_modules/');
+
 let plugins = [];
 let devtools = '';
 
 if (development){
-    entry = [
-        "webpack-dev-server/client?http://localhost:3000",
-        "webpack/hot/only-dev-server",
-        path.resolve(__dirname, 'src/js/app.js')
-    ];
-
     plugins = [
-        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
-            template: 'index.html',
+            template: 'src/index.html',
             inject: true
         })
     ];
 
     devtools = 'source-map';
 }else {
-    entry = [
-        path.resolve(__dirname, 'src/js/app.js')
-    ];
     plugins = [
         new webpack.optimize.UglifyJsPlugin({
             compress: {
@@ -37,7 +30,7 @@ if (development){
             sourceMap: false
         }),
         new HtmlWebpackPlugin({
-            template: 'index.html',
+            template: 'src/index.html',
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
@@ -60,18 +53,26 @@ if (development){
     ];
 }
 
+plugins.push(new webpack.NoErrorsPlugin());
+
 module.exports = {
-    entry: entry,
+    entry: path.resolve(dir_js, 'app.js'),
     output: {
-        filename: 'js/bundle.js',
-        path: path.resolve(__dirname, 'build')
+        filename: 'bundle.js',
+        path: dir_build
+    },
+    devServer: {
+        contentBase: dir_build
     },
     module: {
         loaders: [{
-            test: /\.js$/,
-            loader: 'babel',
-            exclude: path.join(__dirname, '/node_modules/')
+            test: dir_js,
+            loader: 'babel-loader',
+            exclude: dir_node_modules
         }]
+    },
+    stats: {
+        colors: true
     },
     devtool: devtools,
     plugins: plugins,
